@@ -75,6 +75,12 @@ Check DNS and HTTPS before moving to application setup:
 EXPECTED_PUBLIC_IP=<VPS public IPv4> bash scripts/deployment/check-domain-ssl.sh
 ```
 
+Run the full pre-application gate after sections 1 and 2 are complete:
+
+```bash
+EXPECTED_PUBLIC_IP=<VPS public IPv4> bash scripts/deployment/check-pre-app-setup.sh
+```
+
 ## 3. Application Setup
 
 Clone and configure:

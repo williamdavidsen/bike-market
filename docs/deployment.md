@@ -19,7 +19,15 @@ sudo apt update
 sudo apt install -y ca-certificates curl git ufw
 ```
 
-Install Docker Engine and Compose plugin from Docker's official repository, then verify:
+Or run the project baseline script on a fresh Ubuntu 24.04 VPS:
+
+```bash
+sudo bash scripts/deployment/server-baseline.sh
+```
+
+The script installs the base packages, configures Docker's official apt repository, installs Docker Engine with the
+Compose plugin, enables Docker, and applies the firewall baseline below. If you prefer manual setup, install Docker
+Engine and the Compose plugin from Docker's official repository, then verify:
 
 ```bash
 docker --version

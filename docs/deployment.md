@@ -61,6 +61,12 @@ Use a reverse proxy such as Caddy, Traefik, or Nginx with Certbot in front of th
 compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy setup, proxy `bikemarket.no` to
 `127.0.0.1:80` and let Caddy issue Let's Encrypt certificates automatically.
 
+Check DNS and HTTPS before moving to application setup:
+
+```bash
+EXPECTED_PUBLIC_IP=<VPS public IPv4> bash scripts/deployment/check-domain-ssl.sh
+```
+
 ## 3. Application Setup
 
 Clone and configure:

@@ -1,6 +1,6 @@
-# Sykkelix
+# Bike Market
 
-Sykkelix is a Norwegian bicycle e-commerce platform built as a TypeScript monorepo.
+Bike Market is a Norwegian bicycle e-commerce platform built as a TypeScript monorepo.
 
 ## Stack
 
@@ -171,8 +171,8 @@ docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 Run database migrations and seed data against the production compose network:
 
 ```bash
-docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @sykkelix/backend
-docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w @sykkelix/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w apps/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w apps/backend
 ```
 
 Health checks:
@@ -210,21 +210,21 @@ docker compose up -d
 Check backend database connectivity:
 
 ```bash
-npm run db:check -w @sykkelix/backend
+npm run db:check -w apps/backend
 ```
 
 Run Prisma migration and seed:
 
 ```bash
-npm run db:migrate -w @sykkelix/backend -- --name init_ecommerce_schema
-npm run db:seed -w @sykkelix/backend
+npm run db:migrate -w apps/backend -- --name init_ecommerce_schema
+npm run db:seed -w apps/backend
 ```
 
 Check backend quality standards:
 
 ```bash
-npm run lint -w @sykkelix/backend
-npm run format -w @sykkelix/backend
+npm run lint -w apps/backend
+npm run format -w apps/backend
 npm run test:stage5
 ```
 
@@ -303,7 +303,7 @@ npm run test:stage17
 Run frontend locally:
 
 ```bash
-npm run dev -w @sykkelix/frontend
+npm run dev -w apps/frontend
 ```
 
 ## Development Notes

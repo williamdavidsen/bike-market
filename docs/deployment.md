@@ -1,0 +1,174 @@
+# Sykkelix Deployment Guide
+
+This guide describes a clean VPS deployment for the production Docker Compose stack.
+
+## 1. Server Baseline
+
+Recommended minimum VPS:
+
+- Ubuntu 24.04 LTS
+- 2 vCPU
+- 4 GB RAM
+- 40 GB SSD
+- SSH access with a non-root deploy user
+
+Install base packages:
+
+```bash
+sudo apt update
+sudo apt install -y ca-certificates curl git ufw
+```
+
+Install Docker Engine and Compose plugin from Docker's official repository, then verify:
+
+```bash
+docker --version
+docker compose version
+```
+
+Firewall baseline:
+
+```bash
+sudo ufw allow OpenSSH
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw enable
+```
+
+## 2. Domain And SSL
+
+Create DNS records:
+
+- `A sykkelix.no -> VPS public IPv4`
+- `A www.sykkelix.no -> VPS public IPv4`
+- Optional `AAAA` records if IPv6 is configured
+
+Use a reverse proxy such as Caddy, Traefik, or Nginx with Certbot in front of the frontend container. The production
+compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy setup, proxy `sykkelix.no` to
+`127.0.0.1:80` and let Caddy issue Let's Encrypt certificates automatically.
+
+## 3. Application Setup
+
+Clone and configure:
+
+```bash
+git clone https://github.com/williamdavidsen/Sykkelix.git
+cd Sykkelix
+cp .env.production.example .env.production
+nano .env.production
+```
+
+Required environment variables:
+
+| Variable | Purpose |
+| --- | --- |
+| `NODE_ENV` | Must be `production` |
+| `FRONTEND_URL` | Public site URL, for CORS |
+| `BACKEND_URL` | Public API URL |
+| `FRONTEND_PORT` | Host port exposed by frontend container |
+| `POSTGRES_USER` | Database username |
+| `POSTGRES_PASSWORD` | Long random database password |
+| `POSTGRES_DB` | Database name |
+| `DATABASE_URL` | Backend Prisma connection string using host `postgres` |
+| `JWT_ACCESS_SECRET` | Long random access-token secret |
+| `JWT_REFRESH_SECRET` | Long random refresh-token secret |
+| `PAYMENT_PROVIDER` | `mock` until a real provider is configured |
+| `STRIPE_SECRET_KEY` | Stripe secret when enabled |
+| `VIPPS_CLIENT_ID` | Vipps client id when enabled |
+| `VIPPS_CLIENT_SECRET` | Vipps client secret when enabled |
+| `KLARNA_USERNAME` | Klarna username when enabled |
+| `KLARNA_PASSWORD` | Klarna password when enabled |
+
+Start the stack:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml build
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+```
+
+Run migrations and seed data:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @sykkelix/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w @sykkelix/backend
+```
+
+Smoke checks:
+
+```bash
+curl -fsS https://sykkelix.no/
+curl -fsS https://sykkelix.no/api/health
+docker compose --env-file .env.production -f docker-compose.prod.yml ps
+```
+
+## 4. Database Backup Plan
+
+Create a daily backup directory:
+
+```bash
+mkdir -p ~/sykkelix-backups
+```
+
+Manual backup:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > ~/sykkelix-backups/sykkelix-$(date +%F-%H%M).sql
+```
+
+Restore drill:
+
+```bash
+cat ~/sykkelix-backups/sykkelix-YYYY-MM-DD-HHMM.sql | docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
+```
+
+Retention target:
+
+- Daily backups for 14 days
+- Weekly backups for 8 weeks
+- Copy at least one backup off-server
+- Test restore before major releases
+
+## 5. Logs And Operations
+
+View logs:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml logs -f backend
+docker compose --env-file .env.production -f docker-compose.prod.yml logs -f frontend
+docker compose --env-file .env.production -f docker-compose.prod.yml logs -f postgres
+```
+
+Operational checks:
+
+- Backend health: `/api/health`
+- Frontend health: `/`
+- Disk usage: `df -h`
+- Container state: `docker compose --env-file .env.production -f docker-compose.prod.yml ps`
+- Failed restarts: `docker inspect --format '{{.RestartCount}}' <container>`
+
+## 6. Updates
+
+Deploy an update:
+
+```bash
+git fetch origin
+git checkout main
+git pull --ff-only
+docker compose --env-file .env.production -f docker-compose.prod.yml build
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @sykkelix/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+curl -fsS https://sykkelix.no/api/health
+```
+
+## 7. Rollback
+
+Rollback logic:
+
+1. Identify the last known good commit: `git log --oneline`.
+2. Create a database backup before changing anything.
+3. Check out the previous commit: `git checkout <commit-sha>`.
+4. Rebuild and restart: `docker compose --env-file .env.production -f docker-compose.prod.yml up -d --build`.
+5. Verify `/api/health`, frontend load, login, product list, cart, checkout start, and mock payment.
+
+Database migrations should be backward-compatible where possible. If a migration is destructive, prepare a tested restore
+from backup before deploying it.

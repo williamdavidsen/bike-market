@@ -1,0 +1,10 @@
+{
+  "name": "@sykkelix/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "echo \"Shared lint setup will be added when shared code exists\"",
+    "format": "echo \"Shared format setup will be added when shared code exists\""
+  }
+}

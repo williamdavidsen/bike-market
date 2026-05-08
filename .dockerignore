@@ -1,0 +1,11 @@
+.git
+node_modules
+apps/*/node_modules
+apps/frontend/dist
+apps/backend/dist
+npm-debug.log
+.env
+.env.*
+!.env.example
+Dockerfile
+docker-compose*.yml

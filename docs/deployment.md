@@ -61,6 +61,14 @@ Use a reverse proxy such as Caddy, Traefik, or Nginx with Certbot in front of th
 compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy setup, proxy `bikemarket.no` to
 `127.0.0.1:80` and let Caddy issue Let's Encrypt certificates automatically.
 
+A minimal Caddy example is available at `deploy/caddy/Caddyfile`. Copy it to `/etc/caddy/Caddyfile` after Caddy is
+installed, then reload Caddy:
+
+```bash
+sudo caddy validate --config /etc/caddy/Caddyfile
+sudo systemctl reload caddy
+```
+
 Check DNS and HTTPS before moving to application setup:
 
 ```bash

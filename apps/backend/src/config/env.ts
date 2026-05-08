@@ -12,7 +12,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   PORT: z.coerce.number().int().positive().default(4000),
   FRONTEND_URL: z.url().default("http://localhost:1299"),
-  DATABASE_URL: z.url().default("postgresql://sykkelix:sykkelix_password@localhost:5432/sykkelix"),
+  DATABASE_URL: z.url().default("postgresql://bikemarket:bikemarket_password@localhost:5432/bikemarket"),
   JWT_ACCESS_SECRET: z.string().min(16).default("change-me-access-secret"),
   JWT_REFRESH_SECRET: z.string().min(16).default("change-me-refresh-secret")
 });

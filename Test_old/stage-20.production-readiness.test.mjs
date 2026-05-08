@@ -20,7 +20,7 @@ test("stage 20 includes backend and frontend production Dockerfiles", () => {
 
   assert.equal(exists("apps/backend/Dockerfile"), true);
   assert.equal(exists("apps/frontend/Dockerfile"), true);
-  assert.match(backendDockerfile, /npm run build -w @sykkelix\/backend/);
+  assert.match(backendDockerfile, /npm run build -w @bikemarket\/backend/);
   assert.match(backendDockerfile, /HEALTHCHECK/);
   assert.match(backendDockerfile, /\/api\/health/);
   assert.match(frontendDockerfile, /nginx/);
@@ -47,11 +47,11 @@ test("stage 20 documents production env, migration, seed, and deployment build c
   const envExample = read(".env.production.example");
   const readme = read("README.md");
 
-  assert.equal(rootPkg.scripts["db:migrate:deploy"], "npm run db:migrate:deploy -w @sykkelix/backend");
-  assert.equal(rootPkg.scripts["db:seed"], "npm run db:seed -w @sykkelix/backend");
+  assert.equal(rootPkg.scripts["db:migrate:deploy"], "npm run db:migrate:deploy -w @bikemarket/backend");
+  assert.equal(rootPkg.scripts["db:seed"], "npm run db:seed -w @bikemarket/backend");
   assert.equal(backendPkg.scripts["db:migrate:deploy"], "prisma migrate deploy");
   assert.match(envExample, /NODE_ENV=production/);
-  assert.match(envExample, /DATABASE_URL=postgresql:\/\/sykkelix:/);
+  assert.match(envExample, /DATABASE_URL=postgresql:\/\/bikemarket:/);
   assert.match(envExample, /JWT_ACCESS_SECRET=replace-with/);
   assert.match(readme, /docker compose --env-file \.env\.production -f docker-compose\.prod\.yml build/);
   assert.match(readme, /db:migrate:deploy/);

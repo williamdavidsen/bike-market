@@ -27,11 +27,11 @@ describe("stage 3 docker and postgres foundation", () => {
     const backendEnv = readFileSync(join(root, "apps/backend/.env.example"), "utf8");
 
     for (const content of [rootEnv, backendEnv]) {
-      assert.match(content, /POSTGRES_USER=sykkelix/);
-      assert.match(content, /POSTGRES_PASSWORD=sykkelix_password/);
-      assert.match(content, /POSTGRES_DB=sykkelix/);
+      assert.match(content, /POSTGRES_USER=bikemarket/);
+      assert.match(content, /POSTGRES_PASSWORD=bikemarket_password/);
+      assert.match(content, /POSTGRES_DB=bikemarket/);
       assert.match(content, /POSTGRES_PORT=5432/);
-      assert.match(content, /DATABASE_URL=postgresql:\/\/sykkelix:sykkelix_password@localhost:5432\/sykkelix/);
+      assert.match(content, /DATABASE_URL=postgresql:\/\/bikemarket:bikemarket_password@localhost:5432\/bikemarket/);
     }
   });
 

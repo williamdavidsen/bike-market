@@ -1,8 +1,8 @@
-# Sykkelix QA Test Strategy
+# Bikemarket QA Test Strategy
 
 ## Guiding Principle
 
-Sykkelix testleri once API ve veri guvenligini, sonra frontend davranisini, en son uctan uca akislarini kanitlar. E-ticarette en pahali hatalar yanlis fiyat, yanlis stok, yetkisiz admin erisimi, cift odeme, webhook tekrar isleme ve secret sizintisidir.
+Bikemarket testleri once API ve veri guvenligini, sonra frontend davranisini, en son uctan uca akislarini kanitlar. E-ticarette en pahali hatalar yanlis fiyat, yanlis stok, yetkisiz admin erisimi, cift odeme, webhook tekrar isleme ve secret sizintisidir.
 
 ## Test Pyramid
 

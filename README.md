@@ -1,6 +1,6 @@
-# Bike Market
+# Bikemarket
 
-Bike Market is a Norwegian bicycle e-commerce platform built as a TypeScript monorepo.
+Bikemarket is a Norwegian bicycle e-commerce platform built as a TypeScript monorepo.
 
 ## Stack
 

@@ -68,8 +68,8 @@ test("stage 18 e2e happy path is represented and CI-ready commands are exposed",
   const productDetailPage = read("apps/frontend/src/pages/ProductDetailPage.tsx");
   const paymentSuccessPage = read("apps/frontend/src/pages/PaymentSuccessPage.tsx");
 
-  assert.equal(pkg.scripts["test:stage18"].includes("npm test -w @sykkelix/backend"), true);
-  assert.equal(pkg.scripts["test:stage18"].includes("npm run build -w @sykkelix/frontend"), true);
+  assert.equal(pkg.scripts["test:stage18"].includes("npm test -w @bikemarket/backend"), true);
+  assert.equal(pkg.scripts["test:stage18"].includes("npm run build -w @bikemarket/frontend"), true);
   assert.match(productListPage, /ProductCatalogView/);
   assert.match(productDetailPage, /addCartItem\.mutateAsync/);
   assert.match(checkoutPage, /useStartCheckout/);

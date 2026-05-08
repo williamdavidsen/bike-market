@@ -46,7 +46,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="mt-4 flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-bold uppercase text-slate-500">{product.brand?.name ?? "Wheelix"}</p>
+          <p className="text-xs font-bold uppercase text-slate-500">{product.brand?.name ?? "Bikemarket"}</p>
           <Link to={`/produkt/${product.slug}`}>
             <h2 className="mt-1 line-clamp-2 text-base font-black leading-6 text-slate-950">{product.name}</h2>
           </Link>

@@ -66,6 +66,6 @@ test("stage 19 exposes a dedicated verification command", () => {
   const pkg = JSON.parse(read("package.json"));
 
   assert.match(pkg.scripts["test:stage19"], /stage-19\.norway-modules\.test\.mjs/);
-  assert.match(pkg.scripts["test:stage19"], /build -w @sykkelix\/frontend/);
-  assert.match(pkg.scripts["test:stage19"], /typecheck -w @sykkelix\/backend/);
+  assert.match(pkg.scripts["test:stage19"], /build -w @bikemarket\/frontend/);
+  assert.match(pkg.scripts["test:stage19"], /typecheck -w @bikemarket\/backend/);
 });

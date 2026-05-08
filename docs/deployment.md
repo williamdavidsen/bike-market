@@ -1,4 +1,4 @@
-# Sykkelix Deployment Guide
+# Bikemarket Deployment Guide
 
 This guide describes a clean VPS deployment for the production Docker Compose stack.
 
@@ -39,12 +39,12 @@ sudo ufw enable
 
 Create DNS records:
 
-- `A sykkelix.no -> VPS public IPv4`
-- `A www.sykkelix.no -> VPS public IPv4`
+- `A bikemarket.no -> VPS public IPv4`
+- `A www.bikemarket.no -> VPS public IPv4`
 - Optional `AAAA` records if IPv6 is configured
 
 Use a reverse proxy such as Caddy, Traefik, or Nginx with Certbot in front of the frontend container. The production
-compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy setup, proxy `sykkelix.no` to
+compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy setup, proxy `bikemarket.no` to
 `127.0.0.1:80` and let Caddy issue Let's Encrypt certificates automatically.
 
 ## 3. Application Setup
@@ -52,8 +52,8 @@ compose file exposes the frontend on `${FRONTEND_PORT:-80}`. For a simple Caddy 
 Clone and configure:
 
 ```bash
-git clone https://github.com/williamdavidsen/Sykkelix.git
-cd Sykkelix
+git clone https://github.com/williamdavidsen/bike-market.git
+cd bike-market
 cp .env.production.example .env.production
 nano .env.production
 ```
@@ -89,15 +89,15 @@ docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 Run migrations and seed data:
 
 ```bash
-docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @sykkelix/backend
-docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w @sykkelix/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @bikemarket/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w @bikemarket/backend
 ```
 
 Smoke checks:
 
 ```bash
-curl -fsS https://sykkelix.no/
-curl -fsS https://sykkelix.no/api/health
+curl -fsS https://bikemarket.no/
+curl -fsS https://bikemarket.no/api/health
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
 
@@ -106,19 +106,19 @@ docker compose --env-file .env.production -f docker-compose.prod.yml ps
 Create a daily backup directory:
 
 ```bash
-mkdir -p ~/sykkelix-backups
+mkdir -p ~/bikemarket-backups
 ```
 
 Manual backup:
 
 ```bash
-docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > ~/sykkelix-backups/sykkelix-$(date +%F-%H%M).sql
+docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > ~/bikemarket-backups/bikemarket-$(date +%F-%H%M).sql
 ```
 
 Restore drill:
 
 ```bash
-cat ~/sykkelix-backups/sykkelix-YYYY-MM-DD-HHMM.sql | docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
+cat ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMM.sql | docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
 ```
 
 Retention target:
@@ -155,9 +155,9 @@ git fetch origin
 git checkout main
 git pull --ff-only
 docker compose --env-file .env.production -f docker-compose.prod.yml build
-docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @sykkelix/backend
+docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @bikemarket/backend
 docker compose --env-file .env.production -f docker-compose.prod.yml up -d
-curl -fsS https://sykkelix.no/api/health
+curl -fsS https://bikemarket.no/api/health
 ```
 
 ## 7. Rollback

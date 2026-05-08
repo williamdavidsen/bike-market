@@ -6,23 +6,23 @@ import { join } from "node:path";
 const root = process.cwd();
 
 const completedStageTests = [
-  "tests/stage-1.structure.test.mjs",
-  "tests/stage-2.backend.test.mjs",
-  "tests/stage-3.docker-postgres.test.mjs",
-  "tests/stage-4.prisma.test.mjs",
-  "tests/stage-5.backend-standards.test.mjs",
-  "tests/stage-6.auth.test.mjs",
-  "tests/stage-7.catalog.test.mjs",
-  "tests/stage-8.cart.test.mjs",
-  "tests/stage-9.checkout-order.test.mjs",
-  "tests/stage-10.payment-provider.test.mjs",
-  "tests/stage-11.frontend-foundation.test.mjs",
-  "tests/stage-12.frontend-catalog.test.mjs",
-  "tests/stage-13.frontend-product-filtering.test.mjs",
-  "tests/stage-14.frontend-product-detail.test.mjs",
-  "tests/stage-15.frontend-cart.test.mjs",
-  "tests/stage-16.frontend-checkout.test.mjs",
-  "tests/stage-17.frontend-admin.test.mjs"
+  "Test_old/stage-1.structure.test.mjs",
+  "Test_old/stage-2.backend.test.mjs",
+  "Test_old/stage-3.docker-postgres.test.mjs",
+  "Test_old/stage-4.prisma.test.mjs",
+  "Test_old/stage-5.backend-standards.test.mjs",
+  "Test_old/stage-6.auth.test.mjs",
+  "Test_old/stage-7.catalog.test.mjs",
+  "Test_old/stage-8.cart.test.mjs",
+  "Test_old/stage-9.checkout-order.test.mjs",
+  "Test_old/stage-10.payment-provider.test.mjs",
+  "Test_old/stage-11.frontend-foundation.test.mjs",
+  "Test_old/stage-12.frontend-catalog.test.mjs",
+  "Test_old/stage-13.frontend-product-filtering.test.mjs",
+  "Test_old/stage-14.frontend-product-detail.test.mjs",
+  "Test_old/stage-15.frontend-cart.test.mjs",
+  "Test_old/stage-16.frontend-checkout.test.mjs",
+  "Test_old/stage-17.frontend-admin.test.mjs"
 ];
 
 function read(path) {
@@ -53,7 +53,7 @@ describe("QA regression guard", () => {
   it("runs every completed stage through the default regression command", () => {
     const pkg = readJson("package.json");
 
-    assert.equal(pkg.scripts.test, "node --test tests/*.test.mjs");
+    assert.equal(pkg.scripts.test, "node --test tests/**/*.test.mjs");
 
     for (const path of completedStageTests) {
       assert.equal(existsSync(join(root, path)), true, `${path} should exist`);

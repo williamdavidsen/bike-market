@@ -16,14 +16,14 @@ test("stage 21 documents a clean VPS deployment plan", () => {
   assert.match(deployment, /Ubuntu 24\.04 LTS/);
   assert.match(deployment, /Docker Engine/);
   assert.match(deployment, /ufw allow 80\/tcp/);
-  assert.match(deployment, /git clone https:\/\/github\.com\/williamdavidsen\/Sykkelix\.git/);
+  assert.match(deployment, /git clone https:\/\/github\.com\/williamdavidsen\/bike-market\.git/);
   assert.match(deployment, /docker compose --env-file \.env\.production -f docker-compose\.prod\.yml up -d/);
 });
 
 test("stage 21 covers domain, SSL, environment variables, and smoke checks", () => {
   const deployment = read("docs/deployment.md");
 
-  assert.match(deployment, /A sykkelix\.no -> VPS public IPv4/);
+  assert.match(deployment, /A bikemarket\.no -> VPS public IPv4/);
   assert.match(deployment, /Let's Encrypt/);
   assert.match(deployment, /Required environment variables/);
   for (const envName of [
@@ -36,7 +36,7 @@ test("stage 21 covers domain, SSL, environment variables, and smoke checks", () 
   ]) {
     assert.match(deployment, new RegExp(envName));
   }
-  assert.match(deployment, /curl -fsS https:\/\/sykkelix\.no\/api\/health/);
+  assert.match(deployment, /curl -fsS https:\/\/bikemarket\.no\/api\/health/);
 });
 
 test("stage 21 covers backup, logs, updates, and rollback", () => {

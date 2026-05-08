@@ -36,13 +36,13 @@ describe("stage 1 monorepo foundation", () => {
 
     assert.equal(pkg.private, true);
     assert.deepEqual(pkg.workspaces, ["apps/*", "packages/*"]);
-    assert.equal(pkg.scripts.test, "node --test tests/*.test.mjs");
-    assert.equal(pkg.scripts["test:stage1"], "node --test tests/stage-1.structure.test.mjs");
+    assert.equal(pkg.scripts.test, "node --test tests/**/*.test.mjs");
+    assert.equal(pkg.scripts["test:stage1"], "node --test Test_old/stage-1.structure.test.mjs");
   });
 
   it("names workspace packages consistently", () => {
-    assert.equal(readJson("apps/backend/package.json").name, "@sykkelix/backend");
-    assert.equal(readJson("apps/frontend/package.json").name, "@sykkelix/frontend");
-    assert.equal(readJson("packages/shared/package.json").name, "@sykkelix/shared");
+    assert.equal(readJson("apps/backend/package.json").name, "@bikemarket/backend");
+    assert.equal(readJson("apps/frontend/package.json").name, "@bikemarket/frontend");
+    assert.equal(readJson("packages/shared/package.json").name, "@bikemarket/shared");
   });
 });

@@ -10,7 +10,7 @@ COPY packages/shared/package.json packages/shared/package.json
 RUN npm ci
 
 COPY apps/frontend apps/frontend
-RUN npm run build -w @sykkelix/frontend
+RUN npm run build -w @bikemarket/frontend
 
 FROM nginx:1.27-alpine AS runtime
 

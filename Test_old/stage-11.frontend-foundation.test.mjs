@@ -17,7 +17,7 @@ describe("stage 11 frontend foundation", () => {
   it("configures Vite React TypeScript and required frontend dependencies", () => {
     const pkg = readJson("apps/frontend/package.json");
 
-    assert.equal(pkg.scripts.dev, "vite");
+    assert.equal(pkg.scripts.dev, "npm run build && vite preview --host 0.0.0.0 --port 1299 --strictPort");
     assert.match(pkg.scripts.build, /vite build/);
     assert.match(pkg.scripts.typecheck, /tsc/);
 

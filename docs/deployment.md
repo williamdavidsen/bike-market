@@ -43,6 +43,12 @@ sudo ufw allow 443/tcp
 sudo ufw enable
 ```
 
+Check the baseline before moving to domain and SSL:
+
+```bash
+bash scripts/deployment/check-server-baseline.sh
+```
+
 ## 2. Domain And SSL
 
 Create DNS records:

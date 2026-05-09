@@ -96,6 +96,7 @@ Validate the production environment file before building containers:
 
 ```bash
 bash scripts/deployment/check-production-env.sh
+bash scripts/deployment/check-production-compose.sh
 ```
 
 Required environment variables:

@@ -43,3 +43,11 @@ test("deployment docs expose the pre-application gate before application setup",
   assert.notEqual(appSetupIndex, -1);
   assert.equal(gateIndex < appSetupIndex, true);
 });
+
+test("root package exposes deployment check commands", () => {
+  const pkg = JSON.parse(read("package.json"));
+
+  assert.equal(pkg.scripts["deploy:check:server"], "bash scripts/deployment/check-server-baseline.sh");
+  assert.equal(pkg.scripts["deploy:check:domain"], "bash scripts/deployment/check-domain-ssl.sh");
+  assert.equal(pkg.scripts["deploy:check:pre-app"], "bash scripts/deployment/check-pre-app-setup.sh");
+});

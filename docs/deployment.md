@@ -92,6 +92,12 @@ cp .env.production.example .env.production
 nano .env.production
 ```
 
+Validate the production environment file before building containers:
+
+```bash
+bash scripts/deployment/check-production-env.sh
+```
+
 Required environment variables:
 
 | Variable | Purpose |

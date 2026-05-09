@@ -162,12 +162,15 @@ Manual backup:
 
 ```bash
 docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > ~/bikemarket-backups/bikemarket-$(date +%F-%H%M).sql
+bash scripts/deployment/run-database-backup.sh
+bash scripts/deployment/check-database-backups.sh
 ```
 
 Restore drill:
 
 ```bash
 cat ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMM.sql | docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
+bash scripts/deployment/restore-database-backup.sh ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMM.sql
 ```
 
 Retention target:

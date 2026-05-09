@@ -43,3 +43,15 @@ test("deployment docs place application setup checks before database backup plan
   assert.equal(smokeCheckIndex > -1 && smokeCheckIndex < backupIndex, true);
   assert.equal(migrationRunnerIndex > -1 && migrationRunnerIndex < backupIndex, true);
 });
+
+test("root package exposes application setup deployment commands", () => {
+  const pkg = JSON.parse(read("package.json"));
+
+  assert.equal(pkg.scripts["deploy:check:env"], "bash scripts/deployment/check-production-env.sh");
+  assert.equal(pkg.scripts["deploy:check:compose"], "bash scripts/deployment/check-production-compose.sh");
+  assert.equal(pkg.scripts["deploy:check:smoke"], "bash scripts/deployment/check-application-smoke.sh");
+  assert.equal(pkg.scripts["deploy:migrate"], "bash scripts/deployment/run-production-migrations.sh");
+  assert.match(pkg.scripts["deploy:check:pre-backup"], /deploy:check:env/);
+  assert.match(pkg.scripts["deploy:check:pre-backup"], /deploy:check:compose/);
+  assert.match(pkg.scripts["deploy:check:pre-backup"], /deploy:check:smoke/);
+});

@@ -144,6 +144,12 @@ docker compose --env-file .env.production -f docker-compose.prod.yml ps
 bash scripts/deployment/check-application-smoke.sh
 ```
 
+Run the full gate before continuing to the database backup plan:
+
+```bash
+npm run deploy:check:pre-backup
+```
+
 ## 4. Database Backup Plan
 
 Create a daily backup directory:

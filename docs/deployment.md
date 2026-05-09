@@ -216,6 +216,7 @@ docker compose --env-file .env.production -f docker-compose.prod.yml build
 docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @bikemarket/backend
 docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 curl -fsS https://bikemarket.no/api/health
+bash scripts/deployment/deploy-update.sh
 ```
 
 ## 7. Rollback

@@ -132,6 +132,7 @@ Run migrations and seed data:
 ```bash
 docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:migrate:deploy -w @bikemarket/backend
 docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend npm run db:seed -w @bikemarket/backend
+bash scripts/deployment/run-production-migrations.sh
 ```
 
 Smoke checks:

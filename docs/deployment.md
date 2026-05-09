@@ -229,5 +229,11 @@ Rollback logic:
 4. Rebuild and restart: `docker compose --env-file .env.production -f docker-compose.prod.yml up -d --build`.
 5. Verify `/api/health`, frontend load, login, product list, cart, checkout start, and mock payment.
 
+Use the rollback helper for the standard path:
+
+```bash
+bash scripts/deployment/rollback-release.sh <commit-sha>
+```
+
 Database migrations should be backward-compatible where possible. If a migration is destructive, prepare a tested restore
 from backup before deploying it.

@@ -41,8 +41,8 @@ class InMemoryCartService implements CartService {
         stock: 3,
         product: {
           id: "prod-urban",
-          name: "Wheelix Urban E1",
-          slug: "wheelix-urban-e1"
+          name: "Bikemarket Urban E1",
+          slug: "bikemarket-urban-e1"
         }
       }
     ]

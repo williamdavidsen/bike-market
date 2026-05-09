@@ -47,7 +47,7 @@ export function Header() {
               />
             </span>
           </button>
-          <Link to="/" aria-label="Wheelix forside" className="shrink-0" onClick={closeMobileMenu}>
+          <Link to="/" aria-label="Bikemarket forside" className="shrink-0" onClick={closeMobileMenu}>
             <BrandLogo size="sm" />
           </Link>
           <form className="hidden flex-1 items-center rounded-xl bg-white/80 px-4 py-2 text-[var(--brand-navy)] ring-1 ring-emerald-100 lg:flex">

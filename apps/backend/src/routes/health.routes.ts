@@ -8,7 +8,7 @@ healthRouter.get("/", (_req, res) => {
     res,
     {
       status: "ok",
-      service: "wheelix-api"
+      service: "bikemarket-api"
     },
     "API is healthy"
   );

@@ -54,7 +54,7 @@ export function BrandLogo({ showWordmark = true, size = "md", tone = "default", 
       <BicycleArrowMark className={`${selectedSize.mark} shrink-0 text-[var(--brand-green)]`} />
       {showWordmark ? (
         <span className={`brand-wordmark ${selectedSize.text} ${wordmarkColor}`}>
-          Wheel<span className="text-[var(--brand-green)]">ix</span>
+          Bike<span className="text-[var(--brand-green)]">market</span>
         </span>
       ) : null}
     </span>

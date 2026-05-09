@@ -30,7 +30,7 @@ class InMemoryCheckoutService implements CheckoutService {
       variantId: "variant-urban",
       quantity: 2,
       productId: "prod-urban",
-      productName: "Wheelix Urban E1",
+      productName: "Bikemarket Urban E1",
       variantName: "Medium / Svart",
       sku: "URBAN-M-BLK",
       dbUnitPriceNok: "24990.00"
@@ -179,7 +179,7 @@ describe("checkout and order endpoints", () => {
     assert.equal(response.body.success, true);
     assert.equal(response.body.data.order.status, "PENDING");
     assert.equal(response.body.data.order.items.length, 1);
-    assert.equal(response.body.data.order.items[0].productName, "Wheelix Urban E1");
+    assert.equal(response.body.data.order.items[0].productName, "Bikemarket Urban E1");
     assert.equal(response.body.data.paymentSession.provider, "MOCK");
     assert.equal(response.body.data.paymentSession.amountNok, response.body.data.order.totalNok);
   });

@@ -13,30 +13,30 @@ async function main(): Promise<void> {
   });
 
   const brand = await prisma.brand.upsert({
-    where: { slug: "wheelix" },
+    where: { slug: "bikemarket" },
     update: {},
     create: {
-      name: "Wheelix",
-      slug: "wheelix",
-      description: "Wheelix private label"
+      name: "Bikemarket",
+      slug: "bikemarket",
+      description: "Bikemarket private label"
     }
   });
 
   const product = await prisma.product.upsert({
-    where: { slug: "wheelix-urban-e1" },
+    where: { slug: "bikemarket-urban-e1" },
     update: {},
     create: {
       categoryId: category.id,
       brandId: brand.id,
-      name: "Wheelix Urban E1",
-      slug: "wheelix-urban-e1",
+      name: "Bikemarket Urban E1",
+      slug: "bikemarket-urban-e1",
       description: "Komfortabel elsykkel for norske bygater",
       status: "ACTIVE",
       basePriceNok: "24990.00",
       images: {
         create: {
           url: "/images/products/sykkel2.png",
-          altText: "Wheelix Urban E1 elsykkel",
+          altText: "Bikemarket Urban E1 elsykkel",
           isPrimary: true
         }
       },

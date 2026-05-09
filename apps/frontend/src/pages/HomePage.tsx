@@ -17,7 +17,7 @@ const trustItems = [
 const featuredProductImage = "/images/products/sykkel2.png";
 
 const featuredProducts = [
-  { name: "Wheelix Urban E1", price: 24990, tag: "Elsykkel", image: featuredProductImage },
+  { name: "Bikemarket Urban E1", price: 24990, tag: "Elsykkel", image: featuredProductImage },
   { name: "Nord Road R2", price: 14990, tag: "Landevei", image: featuredProductImage },
   { name: "Barnesykkel Mini 20", price: 4990, tag: "Barnesykkel", image: featuredProductImage }
 ];

@@ -5,7 +5,7 @@ import { logger } from "./utils/logger.js";
 const app = createApp();
 
 const server = app.listen(env.PORT, () => {
-  logger.info("Wheelix API listening", { port: env.PORT });
+  logger.info("Bikemarket API listening", { port: env.PORT });
 });
 
 function shutdown(signal: NodeJS.Signals): void {

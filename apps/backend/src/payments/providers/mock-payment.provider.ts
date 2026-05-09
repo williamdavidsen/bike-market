@@ -15,7 +15,7 @@ export class MockPaymentProvider implements PaymentProvider {
       paymentId: `mock-payment-${order.id}`,
       provider: "MOCK",
       providerReference: `mock-ref-${order.orderNumber}`,
-      redirectUrl: `https://mock-payments.wheelix.local/pay/${order.id}`,
+      redirectUrl: `https://mock-payments.bikemarket.local/pay/${order.id}`,
       amountNok: order.totalNok,
       currency: order.currency
     };

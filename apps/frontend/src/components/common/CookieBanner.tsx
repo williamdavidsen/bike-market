@@ -3,7 +3,7 @@ import { Button } from "../ui/Button";
 
 type CookieChoice = "accepted" | "rejected" | "customized";
 
-const storageKey = "wheelix-cookie-choice";
+const storageKey = "bikemarket-cookie-choice";
 
 export function CookieBanner() {
   const [choice, setChoice] = useState<CookieChoice | null>(() => {

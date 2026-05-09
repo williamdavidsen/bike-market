@@ -11,7 +11,7 @@ describe("GET /api/health", () => {
     assert.equal(response.body.message, "API is healthy");
     assert.deepEqual(response.body.data, {
       status: "ok",
-      service: "wheelix-api"
+      service: "bikemarket-api"
     });
   });
 });

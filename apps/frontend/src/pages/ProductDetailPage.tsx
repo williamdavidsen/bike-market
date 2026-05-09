@@ -199,7 +199,7 @@ export function ProductDetailPage() {
               </div>
               <div>
                 <dt className="font-bold text-slate-950">Merke</dt>
-                <dd className="text-slate-600">{product.brand?.name ?? "Wheelix"}</dd>
+                <dd className="text-slate-600">{product.brand?.name ?? "Bikemarket"}</dd>
               </div>
               <div>
                 <dt className="font-bold text-slate-950">Valuta</dt>
@@ -216,7 +216,7 @@ export function ProductDetailPage() {
         <aside className="self-start rounded-2xl bg-white p-6 ring-1 ring-slate-200 lg:sticky lg:top-28">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm font-bold uppercase text-slate-500">{product.brand?.name ?? "Wheelix"}</p>
+              <p className="text-sm font-bold uppercase text-slate-500">{product.brand?.name ?? "Bikemarket"}</p>
               <h1 className="mt-2 text-3xl font-black leading-tight text-slate-950">{product.name}</h1>
             </div>
             <StockBadge product={product} />

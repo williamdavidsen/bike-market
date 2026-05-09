@@ -42,9 +42,9 @@ class InMemoryCatalogService implements CatalogService {
 
   public brands: CatalogBrand[] = [
     {
-      id: "brand-wheelix",
-      name: "Wheelix",
-      slug: "wheelix",
+      id: "brand-bikemarket",
+      name: "Bikemarket",
+      slug: "bikemarket",
       description: "Private label",
       websiteUrl: null,
       isActive: true
@@ -63,9 +63,9 @@ class InMemoryCatalogService implements CatalogService {
     this.product({
       id: "prod-urban",
       categoryId: "cat-electric",
-      brandId: "brand-wheelix",
-      name: "Wheelix Urban E1",
-      slug: "wheelix-urban-e1",
+      brandId: "brand-bikemarket",
+      name: "Bikemarket Urban E1",
+      slug: "bikemarket-urban-e1",
       basePriceNok: "24990.00",
       salePriceNok: "22990.00",
       color: "Svart",
@@ -376,7 +376,7 @@ describe("catalog product endpoints", () => {
       .expect(200);
 
     assert.equal(response.body.data.items.length, 1);
-    assert.equal(response.body.data.items[0].slug, "wheelix-urban-e1");
+    assert.equal(response.body.data.items[0].slug, "bikemarket-urban-e1");
   });
 
   it("filters products by price range", async () => {
@@ -391,10 +391,10 @@ describe("catalog product endpoints", () => {
 
   it("returns product detail by slug", async () => {
     const response = await request(createApp({ catalogService: new InMemoryCatalogService() }))
-      .get("/api/products/wheelix-urban-e1")
+      .get("/api/products/bikemarket-urban-e1")
       .expect(200);
 
-    assert.equal(response.body.data.product.slug, "wheelix-urban-e1");
+    assert.equal(response.body.data.product.slug, "bikemarket-urban-e1");
     assert.equal(response.body.data.product.variants[0].inventory.available, 7);
     assert.equal(response.body.data.product.images[0].isPrimary, true);
   });
@@ -421,9 +421,9 @@ describe("catalog product endpoints", () => {
       .set("Authorization", `Bearer ${adminToken()}`)
       .send({
         categoryId: "cat-electric",
-        brandId: "brand-wheelix",
-        name: "Wheelix Cargo C1",
-        slug: "wheelix-cargo-c1",
+        brandId: "brand-bikemarket",
+        name: "Bikemarket Cargo C1",
+        slug: "bikemarket-cargo-c1",
         status: "ACTIVE",
         basePriceNok: "34990.00",
         variants: [
@@ -442,7 +442,7 @@ describe("catalog product endpoints", () => {
       })
       .expect(201);
 
-    assert.equal(response.body.data.product.slug, "wheelix-cargo-c1");
+    assert.equal(response.body.data.product.slug, "bikemarket-cargo-c1");
     assert.equal(service.products.length, 3);
   });
 
@@ -454,12 +454,12 @@ describe("catalog product endpoints", () => {
       .patch("/api/admin/products/prod-urban")
       .set("Authorization", `Bearer ${adminToken()}`)
       .send({
-        name: "Wheelix Urban E1 Oppdatert",
+        name: "Bikemarket Urban E1 Oppdatert",
         salePriceNok: "21990.00"
       })
       .expect(200);
 
-    assert.equal(updated.body.data.product.name, "Wheelix Urban E1 Oppdatert");
+    assert.equal(updated.body.data.product.name, "Bikemarket Urban E1 Oppdatert");
     assert.equal(updated.body.data.product.salePriceNok, "21990.00");
 
     await request(app)

@@ -198,6 +198,12 @@ Operational checks:
 - Container state: `docker compose --env-file .env.production -f docker-compose.prod.yml ps`
 - Failed restarts: `docker inspect --format '{{.RestartCount}}' <container>`
 
+Run the operations check:
+
+```bash
+bash scripts/deployment/check-operations.sh
+```
+
 ## 6. Updates
 
 Deploy an update:

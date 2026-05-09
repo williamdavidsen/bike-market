@@ -140,6 +140,7 @@ Smoke checks:
 curl -fsS https://bikemarket.no/
 curl -fsS https://bikemarket.no/api/health
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
+bash scripts/deployment/check-application-smoke.sh
 ```
 
 ## 4. Database Backup Plan

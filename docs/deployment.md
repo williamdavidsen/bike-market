@@ -164,25 +164,53 @@ npm run deploy:check:pre-backup
 
 ## 4. Database Backup Plan
 
-Create a daily backup directory:
+Create a backup directory. Override `BACKUP_DIR` if the server should store backups somewhere else:
 
 ```bash
 mkdir -p ~/bikemarket-backups
+BACKUP_DIR=/var/backups/bikemarket mkdir -p /var/backups/bikemarket
 ```
 
-Manual backup:
+Take the first manual backup and verify it:
 
 ```bash
-docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" > ~/bikemarket-backups/bikemarket-$(date +%F-%H%M).sql
 bash scripts/deployment/run-database-backup.sh
 bash scripts/deployment/check-database-backups.sh
+npm run deploy:backup
+npm run deploy:check:backup
 ```
 
-Restore drill:
+The backup script writes `bikemarket-YYYY-MM-DD-HHMMSS.sql` files and prunes old local backups after a successful
+dump. Use these environment variables when the default plan needs to change:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `BACKUP_DIR` | `~/bikemarket-backups` | Directory where SQL backups are stored |
+| `BACKUP_PRUNE_AFTER` | `1` | Prune old backups after each successful dump |
+| `BACKUP_DAILY_RETENTION_DAYS` | `14` | Keep every daily backup newer than this many days |
+| `BACKUP_WEEKLY_RETENTION_WEEKS` | `8` | Keep one weekly backup for this many weeks |
+| `BACKUP_MAX_AGE_HOURS` | `24` | Freshness threshold used by the backup check |
+| `BACKUP_CRON_SCHEDULE` | `15 2 * * *` | Cron schedule for automatic daily backups |
+
+Install the daily backup cron on the VPS:
 
 ```bash
-cat ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMM.sql | docker compose --env-file .env.production -f docker-compose.prod.yml exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
-bash scripts/deployment/restore-database-backup.sh ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMM.sql
+bash scripts/deployment/install-database-backup-cron.sh
+npm run deploy:backup:cron
+```
+
+Run retention pruning manually, or preview it first:
+
+```bash
+BACKUP_PRUNE_DRY_RUN=1 bash scripts/deployment/prune-database-backups.sh
+bash scripts/deployment/prune-database-backups.sh
+npm run deploy:backup:prune
+```
+
+Run a restore drill with a known backup file:
+
+```bash
+bash scripts/deployment/restore-database-backup.sh ~/bikemarket-backups/bikemarket-YYYY-MM-DD-HHMMSS.sql
 ```
 
 Retention target:

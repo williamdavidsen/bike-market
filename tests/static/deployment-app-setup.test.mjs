@@ -14,6 +14,7 @@ test("application setup deployment scripts exist and guard production startup", 
     "scripts/deployment/check-production-env.sh",
     "scripts/deployment/check-production-compose.sh",
     "scripts/deployment/check-application-smoke.sh",
+    "scripts/deployment/deploy-application.sh",
     "scripts/deployment/run-production-migrations.sh"
   ];
 
@@ -26,6 +27,9 @@ test("application setup deployment scripts exist and guard production startup", 
   assert.match(read("scripts/deployment/check-production-env.sh"), /NODE_ENV must be production/);
   assert.match(read("scripts/deployment/check-production-compose.sh"), /docker compose --env-file/);
   assert.match(read("scripts/deployment/check-application-smoke.sh"), /BACKEND_URL/);
+  assert.match(read("scripts/deployment/deploy-application.sh"), /up -d postgres/);
+  assert.match(read("scripts/deployment/deploy-application.sh"), /run-production-migrations\.sh/);
+  assert.match(read("scripts/deployment/deploy-application.sh"), /check-application-smoke\.sh/);
   assert.match(read("scripts/deployment/run-production-migrations.sh"), /db:migrate:deploy/);
   assert.match(read("scripts/deployment/run-production-migrations.sh"), /db:seed/);
 });
@@ -50,6 +54,7 @@ test("root package exposes application setup deployment commands", () => {
   assert.equal(pkg.scripts["deploy:check:env"], "bash scripts/deployment/check-production-env.sh");
   assert.equal(pkg.scripts["deploy:check:compose"], "bash scripts/deployment/check-production-compose.sh");
   assert.equal(pkg.scripts["deploy:check:smoke"], "bash scripts/deployment/check-application-smoke.sh");
+  assert.equal(pkg.scripts["deploy:app"], "bash scripts/deployment/deploy-application.sh");
   assert.equal(pkg.scripts["deploy:migrate"], "bash scripts/deployment/run-production-migrations.sh");
   assert.match(pkg.scripts["deploy:check:pre-backup"], /deploy:check:env/);
   assert.match(pkg.scripts["deploy:check:pre-backup"], /deploy:check:compose/);

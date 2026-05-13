@@ -135,6 +135,10 @@ npm run deploy:check:env
 npm run deploy:check:compose
 npm run deploy:app
 npm run deploy:migrate
+npm run deploy:backup
+npm run deploy:backup:prune
+npm run deploy:backup:cron
+npm run deploy:check:backup
 npm run deploy:check:smoke
 npm run deploy:check:pre-backup
 ```

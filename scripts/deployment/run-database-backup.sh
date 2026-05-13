@@ -27,3 +27,7 @@ if [[ ! -s "${backup_file}" ]]; then
 fi
 
 printf 'Database backup written to %s\n' "${backup_file}"
+
+if [[ "${BACKUP_PRUNE_AFTER:-1}" == "1" ]]; then
+  BACKUP_DIR="${backup_dir}" bash scripts/deployment/prune-database-backups.sh
+fi

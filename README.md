@@ -133,6 +133,7 @@ npm run deploy:check:domain
 npm run deploy:check:pre-app
 npm run deploy:check:env
 npm run deploy:check:compose
+npm run deploy:app
 npm run deploy:migrate
 npm run deploy:check:smoke
 npm run deploy:check:pre-backup

@@ -120,11 +120,11 @@ Required environment variables:
 | `KLARNA_USERNAME` | Klarna username when enabled |
 | `KLARNA_PASSWORD` | Klarna password when enabled |
 
-Start the stack:
+Build the images and start the database:
 
 ```bash
 docker compose --env-file .env.production -f docker-compose.prod.yml build
-docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d postgres
 ```
 
 Run migrations and seed data:
@@ -135,6 +135,12 @@ docker compose --env-file .env.production -f docker-compose.prod.yml run --rm ba
 bash scripts/deployment/run-production-migrations.sh
 ```
 
+Start or refresh all application containers:
+
+```bash
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+```
+
 Smoke checks:
 
 ```bash
@@ -142,6 +148,12 @@ curl -fsS https://bikemarket.no/
 curl -fsS https://bikemarket.no/api/health
 docker compose --env-file .env.production -f docker-compose.prod.yml ps
 bash scripts/deployment/check-application-smoke.sh
+```
+
+Or run the complete application setup path with one command:
+
+```bash
+npm run deploy:app
 ```
 
 Run the full gate before continuing to the database backup plan:

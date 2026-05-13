@@ -47,6 +47,7 @@
     "deploy:check:env": "bash scripts/deployment/check-production-env.sh",
     "deploy:check:compose": "bash scripts/deployment/check-production-compose.sh",
     "deploy:check:smoke": "bash scripts/deployment/check-application-smoke.sh",
+    "deploy:app": "bash scripts/deployment/deploy-application.sh",
     "deploy:migrate": "bash scripts/deployment/run-production-migrations.sh",
     "deploy:check:pre-backup": "npm run deploy:check:env && npm run deploy:check:compose && npm run deploy:check:smoke",
     "typecheck": "npm run typecheck --workspaces --if-present",
